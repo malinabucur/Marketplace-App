@@ -1,16 +1,21 @@
-import CartIcon from "../atoms/cart";
-import FavouritesIcon from "../atoms/heart";
-import Logo from "../molecules/logo";
+import Image from "next/image";
+import Header from "../molecules/header";
 
 export default function Navbar() {
   return (
-    <div className="flex mx-1 justify-between rounded-lg border-4 border-[#D3D3D3] drop-shadow-xl bg-black">
-      <div className="mx-4">
-        <Logo />
+    <div className="bg-[#EEE5E3] w-full h-96">
+      <div className="px-4">
+        <Header />
       </div>
-      <div className="flex items-center mr-8">
-        <FavouritesIcon fillColor="white" />
-        <CartIcon fillColor="white" />
+      <div className="flex justify-between py-[-10px]">
+        <div className="px-44 my-[-30px]">
+          <Image src="/accent_nav.png" alt="Navbar Image Accent" width={300} height={100} />
+        </div>
+
+        <div className="text-black abril-fatface-regular py-20 pr-48">
+          <p className="text-5xl font-bold">Welcome to</p>
+          <p className="text-7xl font-bold ml-10">ChapterCharm </p>
+        </div>
       </div>
     </div>
   );
