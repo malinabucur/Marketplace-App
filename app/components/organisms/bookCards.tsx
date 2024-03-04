@@ -9,12 +9,12 @@ const BookCards: React.FC<BookCardProps> = ({ image, title, authors, publishedDa
       <div className="h-[22rem] overflow-hidden ">
         <Image src={image} alt="Book Cover Image" width={240} height={100} />
       </div>
-      <div className="flex-grow text-black text-base ml-1 mt-auto">
+      <div className="flex-grow text-black text-base ml-1">
         <p className="font-semibold">{title || "-"}</p>
         <p>{authors || "-"} </p>
         <p>{publishedDate || "-"}</p>
       </div>
-      <hr className="h-px my-3 bg-gray-200 border-0" />
+      <hr className="h-px my-2 bg-gray-200 border-0" />
       <div className="flex text-black justify-center mb-3">
         <button className="flex justify-center">
           <CartIcon />
