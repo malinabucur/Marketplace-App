@@ -1,11 +1,7 @@
 import React, { ChangeEvent } from "react";
 import Input from "../atoms/input";
 import SearchIcon from "../atoms/search";
-
-interface SearchBarProps {
-  handleSearch: (e: ChangeEvent<HTMLInputElement>) => void;
-  searchBook: (e: React.FormEvent) => void;
-}
+import { SearchBarProps } from "../interfaces/ISearchBarProps";
 
 const SearchBar: React.FC<SearchBarProps> = ({ handleSearch, searchBook }) => {
   return (
