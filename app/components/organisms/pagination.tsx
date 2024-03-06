@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PaginationArrowIcon } from "../atoms/paginationArrow";
 import BookList from "./bookList";
 import { BookListProps } from "../interfaces/IBookListProps";
+import SortManager from "../molecules/sort";
+import { Book } from "../interfaces/IBook";
 
 const Pagination: React.FC<BookListProps> = ({ books }) => {
   const itemsPerPage = 10;
@@ -10,16 +12,32 @@ const Pagination: React.FC<BookListProps> = ({ books }) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = Math.min(startIndex + itemsPerPage, books.length);
 
-  const displayedBooks = books ? books.slice(startIndex, endIndex) : [];
-
   const totalPages = Math.ceil((books?.length || 0) / itemsPerPage);
 
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
   };
 
+  const [sort, setSort] = useState<string>("");
+
+  const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSort(e.target.value);
+  };
+
+  const sortedBooks = [...books].sort((a: Book, b: Book) => {
+    if (sort === "Newest") {
+      return parseInt(b.volumeInfo.publishedDate?.substring(0, 4) || "0") - parseInt(a.volumeInfo.publishedDate?.substring(0, 4) || "0");
+    } else if (sort === "Oldest") {
+      return parseInt(a.volumeInfo.publishedDate?.substring(0, 4) || "0") - parseInt(b.volumeInfo.publishedDate?.substring(0, 4) || "0");
+    }
+    return 0;
+  });
+
+  const displayedBooks = sortedBooks.slice(startIndex, endIndex);
+
   return (
     <div>
+      <SortManager sort={sort} handleSort={handleSort} />
       <BookList books={displayedBooks} />
 
       <div className="flex items-center justify-center">

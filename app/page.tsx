@@ -8,8 +8,6 @@ import Pagination from "./components/organisms/pagination";
 
 const Home: React.FC = () => {
   const [books, setBooks] = useState<Book[]>([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 10;
 
   const updateBooks: Dispatch<SetStateAction<Book[]>> = (newBooks: Book[] | ((prevState: Book[]) => Book[])) => {
     setBooks((prevState) => (typeof newBooks === "function" ? newBooks(prevState) : newBooks));
