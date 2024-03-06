@@ -37,9 +37,11 @@ class Header extends Component<HeaderProps, HeaderState> {
   render() {
     return (
       <div className="flex justify-end items-center">
-        <SearchBar searchBook={this.searchBook} handleSearch={this.handleSearch} />
-        <FavouritesIcon />
-        <CartIcon />
+        <SearchBar searchBook={this.searchBook} handleSearch={this.handleSearch} searchField={this.state.searchField} />
+        <div className="flex justify-center items-center mt-2">
+          <FavouritesIcon />
+          <CartIcon />
+        </div>
       </div>
     );
   }
