@@ -1,7 +1,5 @@
-export interface VolumeInfo {
-  imageLinks: {
-    thumbnail: string;
-  };
+export interface BookDetailsProps {
+  image: string;
   title: string;
   authors: string;
   publishedDate: string;
