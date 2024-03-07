@@ -1,7 +1,6 @@
 "use client";
 import Footer from "../molecules/footer";
 import Pagination from "../organisms/pagination";
-import BookOverview from "../organisms/bookOverview";
 import { BookListProps } from "../interfaces/IBookListProps";
 
 const HomePage: React.FC<BookListProps> = ({ books }) => {
