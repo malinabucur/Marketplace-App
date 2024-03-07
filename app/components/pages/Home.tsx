@@ -9,7 +9,6 @@ const HomePage: React.FC<BookListProps> = ({ books }) => {
     <>
       <div className="bg-white min-h-screen py-3">
         <Pagination books={books} />
-        <BookOverview books={books} />
       </div>
       <Footer />
     </>

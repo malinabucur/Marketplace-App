@@ -20,3 +20,13 @@ export const handleSearch = async (searchField: string): Promise<Book[]> => {
     return [];
   }
 };
+
+export const searchBookById = async (id: string): Promise<Book> => {
+  try {
+    const response = await request.get("https://www.googleapis.com/books/v1/volumes/" + id);
+    return response.body || undefined;
+  } catch (error) {
+    console.error("Error fetching book:", error);
+    throw error;
+  }
+};
