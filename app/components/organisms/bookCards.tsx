@@ -3,30 +3,32 @@ import CartIcon from "../atoms/cart";
 import React, { useState } from "react";
 import { BookCardProps } from "../interfaces/IBookCardProps";
 import { Book } from "../interfaces/IBook";
-import BookOverview from "./bookOverview";
 import { searchBookById } from "../services/bookService";
+import Modal from "../molecules/modal";
 
 const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publishedDate, volumeInfo }) => {
   const [selectedBook, setSelectedBook] = useState<Book>();
   const [book, setBook] = useState<Book>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleClick = async () => {
     try {
       const bookData = await searchBookById(id);
       setBook(bookData);
       setSelectedBook(bookData);
+      setIsModalOpen(true);
     } catch (error) {
       console.error("Error handling click:", error);
     }
   };
 
-  if (book) {
-    return <BookOverview id={id} title={title} authors={authors} publishedDate={publishedDate} volumeInfo={volumeInfo} />;
-  }
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
   return (
     <>
-      <button onClick={handleClick}>
+      <button onClick={handleClick} type="button" data-twe-toggle="BookModal" data-twe-target="#BookModal" data-twe-ripple-init>
         <div className="flex flex-col bg-white rounded-lg shadow-xl border-2 border-[#D3D3D3] w-60 h-auto mx-12 mb-6 ">
           <div className="h-[22rem] overflow-hidden ">
             <Image src={image} alt="Book Cover Image" width={240} height={100} />
@@ -45,6 +47,7 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
           </div>
         </div>
       </button>
+      {isModalOpen && selectedBook && <Modal book={selectedBook} onClose={closeModal} />}
     </>
   );
 };
