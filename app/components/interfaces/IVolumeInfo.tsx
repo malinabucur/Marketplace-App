@@ -5,4 +5,8 @@ export interface VolumeInfo {
   title: string;
   authors: string;
   publishedDate: string;
+  description: string;
+  pageCount: number;
+  categories: string;
+  language: string;
 }
