@@ -21,7 +21,6 @@ const BookOverview: React.FC<BookOverviewProps> = ({ books }) => {
             language={book.volumeInfo.language}
           />
         );
-        // return <BookCards key={i} image={thumbnail} title={book.volumeInfo.title} authors={book.volumeInfo.authors} publishedDate={book.volumeInfo.publishedDate} />;
       })}
     </div>
   );
