@@ -1,27 +1,22 @@
 import React from "react";
-import { BookOverviewProps } from "../interfaces/IBookOverviewProps";
 import BookDetails from "./bookDetails";
+import { Book } from "../interfaces/IBook";
 
-const BookOverview: React.FC<BookOverviewProps> = ({ books }) => {
+const BookOverview: React.FC<Book> = ({ volumeInfo }) => {
+  const thumbnail = volumeInfo?.imageLinks?.thumbnail || "";
+
   return (
     <div className="flex flex-wrap justify-center my-4">
-      {books.map((book, i: number) => {
-        const thumbnail = book.volumeInfo?.imageLinks?.thumbnail || "";
-
-        return (
-          <BookDetails
-            key={i}
-            image={thumbnail}
-            title={book.volumeInfo.title}
-            authors={book.volumeInfo.authors}
-            publishedDate={book.volumeInfo.publishedDate}
-            description={book.volumeInfo.description}
-            pageCount={book.volumeInfo.pageCount}
-            categories={book.volumeInfo.categories}
-            language={book.volumeInfo.language}
-          />
-        );
-      })}
+      <BookDetails
+        image={thumbnail}
+        title={volumeInfo.title}
+        authors={volumeInfo.authors}
+        publishedDate={volumeInfo.publishedDate}
+        description={volumeInfo.description}
+        pageCount={volumeInfo.pageCount}
+        categories={volumeInfo.categories}
+        language={volumeInfo.language}
+      />
     </div>
   );
 };
