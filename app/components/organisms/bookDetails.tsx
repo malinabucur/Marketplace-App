@@ -1,6 +1,7 @@
 import React from "react";
 import { BookDetailsProps } from "../interfaces/IBookDetailsProps";
 import Image from "next/image";
+import FavouritesIcon from "../atoms/heart";
 
 const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publishedDate, description, pageCount, categories, language }) => {
   return (
@@ -29,6 +30,12 @@ const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publis
           </div>
           <div>
             <span className="font-bold">Language:</span> <span className="uppercase">{language}</span>
+          </div>
+          <div>
+            <button className="flex items-center">
+              <FavouritesIcon />
+              Add to wish list
+            </button>
           </div>
         </div>
       </div>
