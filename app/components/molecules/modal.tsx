@@ -30,7 +30,7 @@ const Modal: React.FC<{ book: Book; onClose: () => void }> = ({ book, onClose })
       aria-labelledby="BookModal"
       aria-modal="true"
       role="dialog"
-      className="flex items-center justify-center fixed inset-0 bg-white border-2 border-black drop-shadow-lg rounded-lg m-12 p-5 overflow-y-auto z-[9999]">
+      className="flex items-start justify-start fixed inset-0 bg-white border-2 border-black drop-shadow-lg rounded-lg m-12 overflow-y-auto z-[9999]">
       <div data-twe-modal-dialog-ref>
         <div>
           <div>
