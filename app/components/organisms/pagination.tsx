@@ -1,42 +1,78 @@
 import { useEffect, useState } from "react";
-import { PaginationArrowIcon } from "../atoms/paginationArrow";
+import { ArrowIcon } from "../atoms/arrow";
 import BookList from "./bookList";
 import { BookListProps } from "../interfaces/IBookListProps";
 import SortManager from "../molecules/sort";
 import { Book } from "../interfaces/IBook";
+import BookCategoriesList from "../molecules/bookCategoriesList";
+import { searchBooks } from "../services/bookService";
 
 const Pagination: React.FC<BookListProps> = ({ books }) => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const endIndex = Math.min(startIndex + itemsPerPage, books.length);
+  const [sort, setSort] = useState<string>("");
+  const [bookCategory, setBookCategory] = useState<Book[]>([]);
+  const [displayedBooks, setDisplayedBooks] = useState<Book[]>([]);
 
   const totalPages = Math.ceil((books?.length || 0) / itemsPerPage);
 
+  useEffect(() => {
+    if (bookCategory.length > 0) {
+      updateDisplayedBooks(bookCategory, sort, currentPage);
+    } else {
+      updateDisplayedBooks(books, sort, currentPage);
+    }
+  }, [currentPage, sort, bookCategory, books]);
+
   const handlePageChange = (newPage: number) => {
     setCurrentPage(newPage);
-  };
 
-  const [sort, setSort] = useState<string>("");
+    updateDisplayedBooks(books, sort, newPage);
+  };
 
   const handleSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setSort(e.target.value);
+    const selectedSort = e.target.value;
+    setSort(selectedSort);
+
+    updateDisplayedBooks(books, selectedSort, currentPage);
   };
 
-  const sortedBooks = [...books].sort((a: Book, b: Book) => {
-    if (sort === "Newest") {
-      return parseInt(b.volumeInfo.publishedDate?.substring(0, 4) || "0") - parseInt(a.volumeInfo.publishedDate?.substring(0, 4) || "0");
-    } else if (sort === "Oldest") {
-      return parseInt(a.volumeInfo.publishedDate?.substring(0, 4) || "0") - parseInt(b.volumeInfo.publishedDate?.substring(0, 4) || "0");
-    }
-    return 0;
-  });
+  const handleCategory = async (category: string) => {
+    let newBooks;
 
-  const displayedBooks = sortedBooks.slice(startIndex, endIndex);
+    if (category.trim() !== "") {
+      newBooks = await searchBooks(category);
+    } else {
+      newBooks = books;
+    }
+
+    setCurrentPage(1);
+    setSort("None");
+
+    setBookCategory(newBooks);
+    updateDisplayedBooks(newBooks, "None", 1);
+  };
+
+  const updateDisplayedBooks = (books: Book[], selectedSort: string, updatedPage: number) => {
+    const sortedBooks = [...books].sort((a: Book, b: Book) => {
+      if (selectedSort === "Newest") {
+        return parseInt(b.volumeInfo.publishedDate?.substring(0, 4) || "0") - parseInt(a.volumeInfo.publishedDate?.substring(0, 4) || "0");
+      } else if (selectedSort === "Oldest") {
+        return parseInt(a.volumeInfo.publishedDate?.substring(0, 4) || "0") - parseInt(b.volumeInfo.publishedDate?.substring(0, 4) || "0");
+      }
+      return 0;
+    });
+
+    const startIndex = (updatedPage - 1) * itemsPerPage;
+    const endIndex = Math.min(startIndex + itemsPerPage, sortedBooks.length);
+    const newBooks = sortedBooks.slice(startIndex, endIndex);
+    setDisplayedBooks(newBooks);
+  };
 
   return (
     <div>
+      <BookCategoriesList updateBooks={handleCategory} />
       <SortManager sort={sort} handleSort={handleSort} />
       <BookList books={displayedBooks} />
 
@@ -46,7 +82,7 @@ const Pagination: React.FC<BookListProps> = ({ books }) => {
           type="button"
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}>
-          <PaginationArrowIcon d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+          <ArrowIcon d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
         </button>
 
         <div className="flex items-center gap-2">
@@ -68,7 +104,7 @@ const Pagination: React.FC<BookListProps> = ({ books }) => {
           type="button"
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}>
-          <PaginationArrowIcon d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+          <ArrowIcon d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
         </button>
       </div>
     </div>
