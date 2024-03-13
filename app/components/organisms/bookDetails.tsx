@@ -5,19 +5,21 @@ import FavouritesIcon from "../atoms/heart";
 
 const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publishedDate, description, pageCount, categories, language }) => {
   return (
-    <div className="flex space-between">
-      <div className="my-1 justify-center h-80 w-11/12">
-        <Image src={image} alt="Book Cover Image" width={100} height={100} className="object-cover w-full h-full" />
+    <div className="flex space-between w-[auto] h-[30rem] mx-12">
+      <div className="h-[22rem] w-auto my-3">
+        <Image src={image} alt="Book Cover Image" width={200} height={100} className="object-cover" />
       </div>
 
       <div className="text-black text-base mx-3 px-4">
-        <div>
-          <div className="text-3xl font-semibold">{title}</div>
-          <div>{authors}</div>
-          <div>{publishedDate}</div>
+        <div className="flex justify-between">
+          <div className="py-2">
+            <div className="text-3xl font-semibold">{title}</div>
+            <div>{authors}</div>
+            <div>{publishedDate}</div>
+          </div>
         </div>
-        <hr className="h-px my-4 bg-gray-200 border-0" />
-        <div>
+        <hr className="h-px my-4 bg-gray-300 border-0" />
+        <div className="pb-10">
           <div>
             <span className="font-bold">Description: </span>
             <span dangerouslySetInnerHTML={{ __html: description }} />
@@ -26,12 +28,13 @@ const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publis
             <span className="font-bold">Page number:</span> {pageCount}
           </div>
           <div>
-            <span className="font-bold">Category:</span> {categories}
+            <span className="font-bold">Category:</span>
+            {categories}
           </div>
           <div>
             <span className="font-bold">Language:</span> <span className="uppercase">{language}</span>
           </div>
-          <div>
+          <div className="mt-3">
             <button className="flex items-center">
               <FavouritesIcon />
               Add to wish list
