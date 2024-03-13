@@ -6,7 +6,7 @@ const BookOverview: React.FC<{ book: Book }> = ({ book }) => {
   const thumbnail = book.volumeInfo?.imageLinks?.thumbnail || "";
 
   return (
-    <div className="flex flex-wrap justify-center my-4">
+    <div className="flex justify-start my-10">
       <BookDetails
         image={thumbnail}
         title={book.volumeInfo.title}
