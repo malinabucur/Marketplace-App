@@ -1,13 +1,13 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
 import Header from "../molecules/header";
 import Image from "next/image";
 import { NavbarProps } from "../interfaces/INavbarProps";
 
-const Navbar: React.FC<NavbarProps> = ({ updateBooks }) => {
+const Navbar: React.FC<NavbarProps> = ({ updateBooks, updateSearchField }) => {
   return (
     <div className="bg-[#EEE5E3] w-full h-96">
       <div className="px-4">
-        <Header updateBooks={updateBooks} />
+        <Header updateBooks={updateBooks} updateSearchField={updateSearchField} />
       </div>
       <div className="flex justify-between py-[-10px]">
         <div className="px-44 my-[-30px]">
