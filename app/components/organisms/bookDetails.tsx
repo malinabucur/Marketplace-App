@@ -14,7 +14,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publis
         <div className="flex justify-between">
           <div className="py-2">
             <div className="text-3xl font-semibold">{title}</div>
-            <div>{authors}</div>
+            <div>{authors.join(", ")}</div>
             <div>{publishedDate}</div>
           </div>
         </div>
