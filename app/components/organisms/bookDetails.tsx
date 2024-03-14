@@ -28,8 +28,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publis
             <span className="font-bold">Page number:</span> {pageCount}
           </div>
           <div>
-            <span className="font-bold">Category:</span>
-            {categories}
+            <span className="font-bold">Category:</span> {categories}
           </div>
           <div>
             <span className="font-bold">Language:</span> <span className="uppercase">{language}</span>
