@@ -40,10 +40,10 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
           </div>
           <hr className="h-px my-2 bg-gray-200 border-0" />
           <div className="flex text-black justify-center mb-3">
-            <button className="flex justify-center">
+            <span className="flex justify-center">
               <CartIcon />
               <p className="ml-2">Add to cart</p>
-            </button>
+            </span>
           </div>
         </div>
       </button>
