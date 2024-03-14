@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { Book } from "../interfaces/IBook";
 import { BookCategoriesListProps, BookCategoriesListState } from "../interfaces/IBookCategoriesListProps";
-import { searchBooks } from "../services/bookService";
+import { searchBooksByCategory } from "../services/bookService";
 import CategoryList from "../organisms/categoryList";
 
 class BookCategoriesList extends Component<BookCategoriesListProps, BookCategoriesListState> {
@@ -18,7 +18,7 @@ class BookCategoriesList extends Component<BookCategoriesListProps, BookCategori
 
   searchBook = async (category: string) => {
     if (category.trim() !== "") {
-      const books = await searchBooks(category);
+      const books = await searchBooksByCategory(category);
       this.props.updateBooks(category);
       this.updateBooksState(books);
     }

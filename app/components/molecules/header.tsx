@@ -2,7 +2,7 @@ import React, { ChangeEvent, Component, Dispatch, SetStateAction } from "react";
 import CartIcon from "../atoms/cart";
 import FavouritesIcon from "../atoms/heart";
 import SearchBar from "./searchBar";
-import { searchBooks } from "../services/bookService";
+import { searchBookByTitle } from "../services/bookService";
 import { Book } from "../interfaces/IBook";
 import { HeaderProps, HeaderState } from "../interfaces/IHeaderProps";
 
@@ -23,21 +23,26 @@ class Header extends Component<HeaderProps, HeaderState> {
     this.setState({ searchField: e.target.value });
   };
 
-  searchBook = async (e: React.FormEvent) => {
+  searchBookByTitle = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const { searchField } = this.state;
 
     if (searchField.trim() !== "") {
-      const books = await searchBooks(searchField);
+      const books = await searchBookByTitle(searchField);
       this.props.updateBooks(books);
+      this.props.updateSearchField(searchField);
+
+      setTimeout(() => {
+        this.props.updateSearchField("");
+      }, 50);
     }
   };
 
   render() {
     return (
       <div className="flex justify-end items-center">
-        <SearchBar searchBook={this.searchBook} handleSearch={this.handleSearch} searchField={this.state.searchField} />
+        <SearchBar searchBookByTitle={this.searchBookByTitle} handleSearch={this.handleSearch} searchField={this.state.searchField} />
         <div className="flex justify-center items-center mt-2">
           <FavouritesIcon />
           <CartIcon />

@@ -5,9 +5,9 @@ import { BookListProps } from "../interfaces/IBookListProps";
 import SortManager from "../molecules/sort";
 import { Book } from "../interfaces/IBook";
 import BookCategoriesList from "../molecules/bookCategoriesList";
-import { searchBooks } from "../services/bookService";
+import { searchBooksByCategory } from "../services/bookService";
 
-const Pagination: React.FC<BookListProps> = ({ books }) => {
+const Pagination: React.FC<BookListProps> = ({ books, searchField }) => {
   const itemsPerPage = 10;
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -18,7 +18,7 @@ const Pagination: React.FC<BookListProps> = ({ books }) => {
   const totalPages = Math.ceil((books?.length || 0) / itemsPerPage);
 
   useEffect(() => {
-    if (bookCategory.length > 0) {
+    if (bookCategory.length > 0 && searchField?.length == 0) {
       updateDisplayedBooks(bookCategory, sort, currentPage);
     } else {
       updateDisplayedBooks(books, sort, currentPage);
@@ -42,7 +42,7 @@ const Pagination: React.FC<BookListProps> = ({ books }) => {
     let newBooks;
 
     if (category.trim() !== "") {
-      newBooks = await searchBooks(category);
+      newBooks = await searchBooksByCategory(category);
     } else {
       newBooks = books;
     }
