@@ -3,7 +3,7 @@ export interface VolumeInfo {
     thumbnail: string;
   };
   title: string;
-  authors: string;
+  authors: string | string[];
   publishedDate: string;
   description: string;
   pageCount: number;

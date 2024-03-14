@@ -14,11 +14,11 @@ const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publis
         <div className="flex justify-between">
           <div className="py-2">
             <div className="text-3xl font-semibold">{title}</div>
-            <div>{authors.join(", ")}</div>
+            <div>{Array.isArray(authors) ? authors.join(", ") : authors || "-"}</div>
             <div>{publishedDate}</div>
           </div>
         </div>
-        <hr className="h-px my-4 bg-gray-300 border-0" />
+        <hr className="h-px my-4 bg-gray-500 border-0" />
         <div className="pb-10">
           <div>
             <span className="font-bold">Description: </span>

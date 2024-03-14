@@ -6,7 +6,7 @@ import { Book } from "../interfaces/IBook";
 import { searchBookById } from "../services/bookService";
 import Modal from "../molecules/modal";
 
-const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publishedDate, volumeInfo }) => {
+const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publishedDate, amount, currencyCode }) => {
   const [selectedBook, setSelectedBook] = useState<Book>();
   const [book, setBook] = useState<Book>();
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -35,12 +35,15 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
           </div>
           <div className="text-start text-black text-base ml-1">
             <p className="font-semibold">{title || "-"}</p>
-            <p>{authors?.join(", ") || "-"} </p>
+            <p>{Array.isArray(authors) ? authors.join(", ") : authors || "-"}</p>
             <p>{publishedDate || "-"}</p>
           </div>
-          <hr className="h-px my-2 bg-gray-200 border-0" />
-          <div className="flex text-black justify-center mb-3">
-            <span className="flex justify-center">
+          <hr className="h-px my-2 bg-gray-500 border-0" />
+          <div className="flex flex-col text-black justify-center mb-3">
+            <p className="text-center">
+              {amount} {currencyCode}
+            </p>
+            <span className="flex justify-center mt-2">
               <CartIcon />
               <p className="ml-2">Add to cart</p>
             </span>
