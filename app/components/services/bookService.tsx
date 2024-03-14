@@ -6,6 +6,9 @@ const cleanBookData = (books: any[]): Book[] => {
     if (!book.volumeInfo.hasOwnProperty("imageLinks")) {
       book.volumeInfo["imageLinks"] = { thumbnail: "https://vignette.wikia.nocookie.net/pandorahearts/images/a/ad/Not_available.jpg/revision/latest?cb=20141028171337" };
     }
+    if (!book.saleInfo.hasOwnProperty("listPrice")) {
+      book.saleInfo["listPrice"] = { amount: 30 + " RON" };
+    }
     return book;
   });
 };
