@@ -35,7 +35,7 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
           </div>
           <div className="text-start text-black text-base ml-1">
             <p className="font-semibold">{title || "-"}</p>
-            <p>{authors.join(", ") || "-"} </p>
+            <p>{authors?.join(", ") || "-"} </p>
             <p>{publishedDate || "-"}</p>
           </div>
           <hr className="h-px my-2 bg-gray-200 border-0" />
