@@ -7,9 +7,14 @@ import { handleSearch } from "./components/services/bookService";
 
 const Home = () => {
   const [books, setBooks] = useState<Book[]>([]);
+  const [searchField, setSearchField] = useState<string>("");
 
   const updateBooks: Dispatch<SetStateAction<Book[]>> = (newBooks: Book[] | ((prevState: Book[]) => Book[])) => {
     setBooks((prevState) => (typeof newBooks === "function" ? newBooks(prevState) : newBooks));
+  };
+
+  const handleSearchField = (searchField: string) => {
+    setSearchField(searchField);
   };
 
   const searchBooks = async (searchField: string) => {
@@ -27,8 +32,8 @@ const Home = () => {
 
   return (
     <>
-      <Navbar updateBooks={updateBooks} searchBooks={searchBooks} />
-      <HomePage books={books} />
+      <Navbar updateBooks={updateBooks} searchBooks={searchBooks} updateSearchField={handleSearchField} />
+      <HomePage books={books} searchField={searchField} />
     </>
   );
 };
