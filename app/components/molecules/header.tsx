@@ -6,11 +6,12 @@ import { searchBookByTitle } from "../services/bookService";
 import { Book } from "../interfaces/IBook";
 import { HeaderProps, HeaderState } from "../interfaces/IHeaderProps";
 import WishListModal from "./wishListModal";
+import CartModal from "./cartModal";
 
 class Header extends Component<HeaderProps, HeaderState> {
   constructor(props: HeaderProps) {
     super(props);
-    this.state = { books: [], searchField: "", wishList: [], showModal: false, selectedBookTitle: "" };
+    this.state = { books: [], searchField: "", wishList: [], showWishListModal: false, selectedBookTitle: "", cart: [], showCartModal: false };
     this.handleSearch = this.handleSearch.bind(this);
   }
 
@@ -42,21 +43,19 @@ class Header extends Component<HeaderProps, HeaderState> {
 
   componentDidMount() {
     const wishList = localStorage.getItem("wishList");
-    if (wishList) {
+    const cart = localStorage.getItem("cart");
+    if (wishList && cart) {
       this.setState({ wishList: JSON.parse(wishList) });
+      this.setState({ cart: JSON.parse(cart) });
     }
   }
 
-  addToWishList = (title: string) => {
-    if (!this.state.wishList.includes(title) && title !== null) {
-      const updatedWishList = [...this.state.wishList, title];
-      this.setState({ wishList: updatedWishList });
-      localStorage.setItem("wishList", JSON.stringify(updatedWishList));
-    }
+  toggleWishListModal = () => {
+    this.setState((prevState) => ({ showWishListModal: !prevState.showWishListModal }));
   };
 
-  toggleModal = () => {
-    this.setState((prevState) => ({ showModal: !prevState.showModal }));
+  toggleCartModal = () => {
+    this.setState((prevState) => ({ showCartModal: !prevState.showCartModal }));
   };
 
   handleBookClick = (title: string) => {
@@ -68,12 +67,12 @@ class Header extends Component<HeaderProps, HeaderState> {
       <div className="flex justify-end items-center">
         <SearchBar searchBookByTitle={this.searchBookByTitle} handleSearch={this.handleSearch} searchField={this.state.searchField} />
         <div className="flex justify-center items-center mt-2 ml-2">
-          <button onClick={this.toggleModal}>
+          <button onClick={this.toggleWishListModal}>
             <FavouritesIcon />
           </button>
           <div className="text-black content-center">
-            {this.state.showModal && (
-              <WishListModal onClose={this.toggleModal} wishList={this.state.wishList} onBookClick={this.handleBookClick}>
+            {this.state.showWishListModal && (
+              <WishListModal onClose={this.toggleWishListModal} wishList={this.state.wishList} onBookClick={this.handleBookClick}>
                 {this.state.wishList.map((title, index) => (
                   <li key={index} onClick={() => this.handleBookClick(title)}>
                     {title}
@@ -82,7 +81,27 @@ class Header extends Component<HeaderProps, HeaderState> {
               </WishListModal>
             )}
           </div>
-          <CartIcon />
+          <button onClick={this.toggleCartModal}>
+            <CartIcon />
+          </button>
+          <div className="content-center">
+            {this.state.showCartModal && (
+              <CartModal onClose={this.toggleCartModal} cart={this.state.cart} onBookClick={this.handleBookClick}>
+                {this.state.cart.map((item, index) => (
+                  <div key={index} onClick={() => this.handleBookClick(item.title)} className="flex py-3">
+                    <img src={item.image} alt={item.title} className="w-20 h-28 inline-block mr-2" />
+                    <div className="flex flex-col text-black">
+                      <span className="text-xl font-medium">{item.title}</span>
+                      <span className="text-lg font-base">{Array.isArray(item.authors) ? item.authors.join(", ") : item.authors}</span>
+                      <span className="">
+                        {item.amount} {item.currencyCode}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </CartModal>
+            )}
+          </div>
         </div>
       </div>
     );

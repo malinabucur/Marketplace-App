@@ -10,6 +10,8 @@ export interface HeaderState {
   books: Book[];
   searchField: string;
   wishList: string[];
-  showModal: boolean;
+  showWishListModal: boolean;
   selectedBookTitle: string;
+  showCartModal: boolean;
+  cart: { title: string; authors: string | string[]; image: string; amount: string; currencyCode: string }[];
 }
