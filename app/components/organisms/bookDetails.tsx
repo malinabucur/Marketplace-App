@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookDetailsProps } from "../interfaces/IBookDetailsProps";
 import Image from "next/image";
 import FavouritesIcon from "../atoms/heart";
 
-const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publishedDate, description, pageCount, categories, language }) => {
+const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publishedDate, description, pageCount, categories, language, addToWishList }) => {
+  const handleAddToWishList = async () => {
+    addToWishList(title);
+  };
+
   return (
     <div className="flex space-between w-[auto] h-[30rem] mx-12">
       <div className="h-[22rem] w-auto my-3">
@@ -34,7 +38,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publis
             <span className="font-bold">Language:</span> <span className="uppercase">{language}</span>
           </div>
           <div className="mt-3">
-            <button className="flex items-center">
+            <button className="flex items-center" onClick={handleAddToWishList}>
               <FavouritesIcon />
               Add to wish list
             </button>
