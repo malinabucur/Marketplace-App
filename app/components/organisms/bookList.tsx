@@ -1,21 +1,24 @@
 import BookCards from "./bookCards";
 import React, { useEffect, useState } from "react";
 import { BookListProps } from "../interfaces/IBookListProps";
-import { title } from "process";
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
-  const [cart, setCart] = useState<string[]>(() => {
-    const storedCart = localStorage.getItem("cart");
-    return storedCart ? JSON.parse(storedCart) : [];
-  });
+  const [cart, setCart] = useState<{ title: string; authors: string | string[]; image: string; amount: string }[]>([]);
 
   useEffect(() => {
-    localStorage.setItem("cart", JSON.stringify(cart));
-  }, [cart]);
+    const storedCart = localStorage.getItem("cart");
+    if (storedCart) {
+      setCart(JSON.parse(storedCart));
+    }
+  }, []);
 
-  const addToCart = (title: string) => {
-    if (!cart.includes(title) && title != null) {
-      setCart((prevCart) => [...prevCart, title]);
+  const addToCart = (title: string, authors: string | string[], image: string, amount: string, currencyCode: string) => {
+    if (!cart.some((item) => item.title === title)) {
+      setCart((prevCart) => {
+        const newCart = [...prevCart, { title, authors, image, amount, currencyCode }];
+        localStorage.setItem("cart", JSON.stringify(newCart));
+        return newCart;
+      });
     }
   };
 
@@ -38,7 +41,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
             saleInfo={book.saleInfo}
             amount={amount}
             currencyCode={currencyCode}
-            addToCart={() => addToCart(book.volumeInfo.title)}
+            addToCart={() => addToCart(book.volumeInfo.title, book.volumeInfo.authors, thumbnail, amount, currencyCode)}
           />
         );
       })}
