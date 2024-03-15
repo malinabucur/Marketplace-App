@@ -26,8 +26,8 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
     setIsModalOpen(false);
   };
 
-  const handleAddToCart = async () => {
-    addToCart(title);
+  const handleAddToCart = () => {
+    addToCart(title, Array.isArray(authors) ? authors.join(", ") : authors, image, amount, currencyCode);
   };
 
   return (
