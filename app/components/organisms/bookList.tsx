@@ -1,8 +1,24 @@
 import BookCards from "./bookCards";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookListProps } from "../interfaces/IBookListProps";
+import { title } from "process";
 
 const BookList: React.FC<BookListProps> = ({ books }) => {
+  const [cart, setCart] = useState<string[]>(() => {
+    const storedCart = localStorage.getItem("cart");
+    return storedCart ? JSON.parse(storedCart) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  const addToCart = (title: string) => {
+    if (!cart.includes(title) && title != null) {
+      setCart((prevCart) => [...prevCart, title]);
+    }
+  };
+
   return (
     <div className="flex flex-wrap justify-center my-4">
       {books.map((book, i: number) => {
@@ -22,6 +38,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
             saleInfo={book.saleInfo}
             amount={amount}
             currencyCode={currencyCode}
+            addToCart={() => addToCart(book.volumeInfo.title)}
           />
         );
       })}
