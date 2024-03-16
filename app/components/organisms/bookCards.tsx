@@ -5,11 +5,13 @@ import { BookCardProps } from "../interfaces/IBookCardProps";
 import { Book } from "../interfaces/IBook";
 import { searchBookById } from "../services/bookService";
 import Modal from "../molecules/modal";
+import SuccessAlert from "../atoms/alert";
 
 const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publishedDate, amount, currencyCode, addToCart }) => {
   const [selectedBook, setSelectedBook] = useState<Book>();
   const [book, setBook] = useState<Book>();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const handleClick = async () => {
     try {
@@ -28,6 +30,11 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
 
   const handleAddToCart = () => {
     addToCart(id, title, Array.isArray(authors) ? authors.join(", ") : authors, image, amount, currencyCode);
+
+    setShowAlert(true);
+    setTimeout(() => {
+      setShowAlert(false);
+    }, 3000);
   };
 
   return (
@@ -55,6 +62,7 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
         </div>
       </div>
       {isModalOpen && selectedBook && <Modal book={selectedBook} onClose={closeModal} show={isModalOpen} />}
+      {showAlert && <SuccessAlert message={"Successfully added to cart!"} />}
     </>
   );
 };
