@@ -5,7 +5,7 @@ import { Book } from "../interfaces/IBook";
 const BookOverview: React.FC<{ book: Book }> = ({ book }) => {
   const thumbnail = book.volumeInfo?.imageLinks?.thumbnail || "";
 
-  const [wishList, setWishList] = useState<string[]>([]);
+  const [wishList, setWishList] = useState<{ title: string; authors: string | string[]; image: string }[]>([]);
 
   useEffect(() => {
     const storedWishList = localStorage.getItem("wishList");
@@ -14,10 +14,10 @@ const BookOverview: React.FC<{ book: Book }> = ({ book }) => {
     }
   }, []);
 
-  const addToWishList = (title: string) => {
-    if (!wishList.includes(title) && title != null) {
+  const addToWishList = (title: string, authors: string | string[], image: string) => {
+    if (!wishList.some((item) => item.title === title)) {
       setWishList((prevWishList) => {
-        const newWishList = [...prevWishList, title];
+        const newWishList = [...prevWishList, { title, authors, image }];
         localStorage.setItem("wishList", JSON.stringify(newWishList));
         return newWishList;
       });
@@ -35,7 +35,7 @@ const BookOverview: React.FC<{ book: Book }> = ({ book }) => {
         pageCount={book.volumeInfo.pageCount}
         categories={book.volumeInfo.categories}
         language={book.volumeInfo.language}
-        addToWishList={addToWishList}
+        addToWishList={() => addToWishList(book.volumeInfo.title, book.volumeInfo.authors, thumbnail)}
       />
     </div>
   );

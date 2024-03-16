@@ -7,5 +7,5 @@ export interface BookDetailsProps {
   pageCount: number;
   categories: string;
   language: string;
-  addToWishList: (title: string) => void;
+  addToWishList: (title: string, authors: string | string[], image: string) => void;
 }

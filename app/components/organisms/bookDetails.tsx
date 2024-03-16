@@ -4,8 +4,8 @@ import Image from "next/image";
 import FavouritesIcon from "../atoms/heart";
 
 const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publishedDate, description, pageCount, categories, language, addToWishList }) => {
-  const handleAddToWishList = async () => {
-    addToWishList(title);
+  const handleAddToWishList = () => {
+    addToWishList(title, Array.isArray(authors) ? authors.join(", ") : authors, image);
   };
 
   return (
