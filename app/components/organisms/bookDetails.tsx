@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { BookDetailsProps } from "../interfaces/IBookDetailsProps";
-import Image from "next/image";
 import FavouritesIcon from "../atoms/heart";
 import CartIcon from "../atoms/cart";
 
-const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publishedDate, description, pageCount, categories, language, addToWishList, addToCart, amount, currencyCode }) => {
+const BookDetails: React.FC<BookDetailsProps> = ({ id, image, title, authors, publishedDate, description, pageCount, categories, language, addToWishList, addToCart, amount, currencyCode }) => {
   const handleAddToWishList = () => {
-    addToWishList(title, Array.isArray(authors) ? authors.join(", ") : authors, image);
+    addToWishList(id, title, Array.isArray(authors) ? authors.join(", ") : authors, image);
   };
 
   const handleAddToCart = () => {
-    addToCart(title, Array.isArray(authors) ? authors.join(", ") : authors, image, amount, currencyCode);
+    addToCart(id, title, Array.isArray(authors) ? authors.join(", ") : authors, image, amount, currencyCode);
   };
 
   return (

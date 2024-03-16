@@ -27,7 +27,7 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
   };
 
   const handleAddToCart = () => {
-    addToCart(title, Array.isArray(authors) ? authors.join(", ") : authors, image, amount, currencyCode);
+    addToCart(id, title, Array.isArray(authors) ? authors.join(", ") : authors, image, amount, currencyCode);
   };
 
   return (
@@ -54,7 +54,7 @@ const BookCards: React.FC<BookCardProps> = ({ id, image, title, authors, publish
           </button>
         </div>
       </div>
-      {isModalOpen && selectedBook && <Modal book={selectedBook} onClose={closeModal} />}
+      {isModalOpen && selectedBook && <Modal book={selectedBook} onClose={closeModal} show={isModalOpen} />}
     </>
   );
 };

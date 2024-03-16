@@ -1,14 +1,10 @@
 import React, { useEffect, useState } from "react";
 import BookDetails from "./bookDetails";
-import { Book } from "../interfaces/IBook";
+import { BookOverviewProps } from "../interfaces/IBookOverviewProps";
 
-const BookOverview: React.FC<{ book: Book }> = ({ book }) => {
-  const thumbnail = book.volumeInfo?.imageLinks?.thumbnail || "";
-  const amount = book.saleInfo?.listPrice?.amount || "";
-  const currencyCode = book.saleInfo?.listPrice?.currencyCode || "";
-
-  const [wishList, setWishList] = useState<{ title: string; authors: string | string[]; image: string }[]>([]);
-  const [cart, setCart] = useState<{ title: string; authors: string | string[]; image: string; amount: string }[]>([]);
+const BookOverview: React.FC<BookOverviewProps> = ({ books }) => {
+  const [wishList, setWishList] = useState<{ id: string; title: string; authors: string | string[]; image: string }[]>([]);
+  const [cart, setCart] = useState<{ id: string; title: string; authors: string | string[]; image: string; amount: string }[]>([]);
 
   useEffect(() => {
     const storedWishList = localStorage.getItem("wishList");
@@ -20,20 +16,20 @@ const BookOverview: React.FC<{ book: Book }> = ({ book }) => {
     }
   }, []);
 
-  const addToWishList = (title: string, authors: string | string[], image: string) => {
+  const addToWishList = (id: string, title: string, authors: string | string[], image: string) => {
     if (!wishList.some((item) => item.title === title)) {
       setWishList((prevWishList) => {
-        const newWishList = [...prevWishList, { title, authors, image }];
+        const newWishList = [...prevWishList, { id, title, authors, image }];
         localStorage.setItem("wishList", JSON.stringify(newWishList));
         return newWishList;
       });
     }
   };
 
-  const addToCart = (title: string, authors: string | string[], image: string, amount: string, currencyCode: string) => {
+  const addToCart = (id: string, title: string, authors: string | string[], image: string, amount: string, currencyCode: string) => {
     if (!cart.some((item) => item.title === title)) {
       setCart((prevCart) => {
-        const newCart = [...prevCart, { title, authors, image, amount, currencyCode }];
+        const newCart = [...prevCart, { id, title, authors, image, amount, currencyCode }];
         localStorage.setItem("cart", JSON.stringify(newCart));
         return newCart;
       });
@@ -42,20 +38,30 @@ const BookOverview: React.FC<{ book: Book }> = ({ book }) => {
 
   return (
     <div className="flex justify-start my-10">
-      <BookDetails
-        image={thumbnail}
-        title={book.volumeInfo.title}
-        authors={book.volumeInfo.authors}
-        publishedDate={book.volumeInfo.publishedDate}
-        description={book.volumeInfo.description}
-        pageCount={book.volumeInfo.pageCount}
-        categories={book.volumeInfo.categories}
-        language={book.volumeInfo.language}
-        amount={book.saleInfo.listPrice.amount}
-        currencyCode={book.saleInfo.listPrice.currencyCode}
-        addToWishList={() => addToWishList(book.volumeInfo.title, book.volumeInfo.authors, thumbnail)}
-        addToCart={() => addToCart(book.volumeInfo.title, book.volumeInfo.authors, thumbnail, amount, currencyCode)}
-      />
+      {books.map((book, i: number) => {
+        const thumbnail = book.volumeInfo?.imageLinks?.thumbnail || "";
+        const amount = book.saleInfo?.listPrice?.amount || "";
+        const currencyCode = book.saleInfo?.listPrice?.currencyCode || "";
+
+        return (
+          <BookDetails
+            key={i}
+            id={book.id}
+            image={thumbnail}
+            title={book.volumeInfo.title}
+            authors={book.volumeInfo.authors}
+            publishedDate={book.volumeInfo.publishedDate}
+            description={book.volumeInfo.description}
+            pageCount={book.volumeInfo.pageCount}
+            categories={book.volumeInfo.categories}
+            language={book.volumeInfo.language}
+            amount={book.saleInfo.listPrice.amount}
+            currencyCode={book.saleInfo.listPrice.currencyCode}
+            addToWishList={() => addToWishList(book.id, book.volumeInfo.title, book.volumeInfo.authors, thumbnail)}
+            addToCart={() => addToCart(book.id, book.volumeInfo.title, book.volumeInfo.authors, thumbnail, amount, currencyCode)}
+          />
+        );
+      })}
     </div>
   );
 };

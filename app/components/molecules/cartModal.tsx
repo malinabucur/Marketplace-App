@@ -1,10 +1,11 @@
 import React, { ReactNode, useEffect } from "react";
+import { VolumeInfo } from "../interfaces/IVolumeInfo";
+import { SaleInfo } from "../interfaces/ISaleInfo";
 
 const CartModal: React.FC<{
   onClose: () => void;
   children?: ReactNode;
-  cart: { title: string; authors: string | string[]; image: string; amount: string; currencyCode: string }[];
-  onBookClick: (title: string) => void;
+  cart: { id: string; title: string; authors: string | string[]; image: string; amount: string; currencyCode: string; volumeInfo: VolumeInfo; publishedDate: string; saleInfo: SaleInfo }[];
 }> = ({ onClose, children, cart }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";

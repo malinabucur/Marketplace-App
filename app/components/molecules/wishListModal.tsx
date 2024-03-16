@@ -1,9 +1,6 @@
 import React, { ReactNode, useEffect } from "react";
 
-const WishListModal: React.FC<{ onClose: () => void; children?: ReactNode; wishList: { title: string; authors: string | string[]; image: string }[]; onBookClick: (title: string) => void }> = ({
-  onClose,
-  children,
-}) => {
+const WishListModal: React.FC<{ onClose: () => void; children?: ReactNode; wishList: { id: string; title: string; authors: string | string[]; image: string }[] }> = ({ onClose, children }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
 

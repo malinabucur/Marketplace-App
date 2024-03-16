@@ -12,10 +12,10 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
     }
   }, []);
 
-  const addToCart = (title: string, authors: string | string[], image: string, amount: string, currencyCode: string) => {
+  const addToCart = (id: string, title: string, authors: string | string[], image: string, amount: string, currencyCode: string) => {
     if (!cart.some((item) => item.title === title)) {
       setCart((prevCart) => {
-        const newCart = [...prevCart, { title, authors, image, amount, currencyCode }];
+        const newCart = [...prevCart, { id, title, authors, image, amount, currencyCode }];
         localStorage.setItem("cart", JSON.stringify(newCart));
         return newCart;
       });
@@ -41,7 +41,7 @@ const BookList: React.FC<BookListProps> = ({ books }) => {
             saleInfo={book.saleInfo}
             amount={amount}
             currencyCode={currencyCode}
-            addToCart={() => addToCart(book.volumeInfo.title, book.volumeInfo.authors, thumbnail, amount, currencyCode)}
+            addToCart={() => addToCart(book.id, book.volumeInfo.title, book.volumeInfo.authors, thumbnail, amount, currencyCode)}
           />
         );
       })}
