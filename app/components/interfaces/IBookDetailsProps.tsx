@@ -7,5 +7,8 @@ export interface BookDetailsProps {
   pageCount: number;
   categories: string;
   language: string;
+  amount: string;
+  currencyCode: string;
   addToWishList: (title: string, authors: string | string[], image: string) => void;
+  addToCart: (title: string, image: string, authors: string | string[], amount: string, currencyCode: string) => void;
 }
