@@ -34,7 +34,7 @@ const CartModal: React.FC<{
       <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
         <div className="flex min-h-full items-end justify-center p-4 text-center items-center">
           <div className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all ">
-            <div className="bg-white pl-10 py-5  w-[45rem] overflow-scroll">
+            <div className="bg-white pl-10 py-5  w-[45rem] overflow-y-scroll">
               <div className="mt-3 text-left h-96">
                 <h3 className="text-2xl font-semibold leading-6 text-gray-900">Cart</h3>
                 <div className="mt-4">
@@ -45,9 +45,7 @@ const CartModal: React.FC<{
             <hr className="h-px my-2 bg-gray-500 border-0" />
             <div className="flex justify-between text-black text-xl mx-6">
               <div className="font-bold">Total: </div>
-              <div>
-                {totalAmount} {cart[0].currencyCode}
-              </div>
+              {totalAmount} RON
             </div>
             <div className="bg-gray-50 px-4 py-3">
               <button type="button" className="mt-3 inline-flex w-full justify-end rounded-md bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm hover:text-red-500">
