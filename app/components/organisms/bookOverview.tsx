@@ -17,7 +17,7 @@ const BookOverview: React.FC<BookOverviewProps> = ({ books }) => {
   }, []);
 
   const addToWishList = (id: string, title: string, authors: string | string[], image: string) => {
-    if (!wishList.some((item) => item.title === title)) {
+    if (!wishList.some((item) => item.id === id)) {
       setWishList((prevWishList) => {
         const newWishList = [...prevWishList, { id, title, authors, image }];
         localStorage.setItem("wishList", JSON.stringify(newWishList));
@@ -27,7 +27,7 @@ const BookOverview: React.FC<BookOverviewProps> = ({ books }) => {
   };
 
   const addToCart = (id: string, title: string, authors: string | string[], image: string, amount: string, currencyCode: string) => {
-    if (!cart.some((item) => item.title === title)) {
+    if (!cart.some((item) => item.id === id)) {
       setCart((prevCart) => {
         const newCart = [...prevCart, { id, title, authors, image, amount, currencyCode }];
         localStorage.setItem("cart", JSON.stringify(newCart));
