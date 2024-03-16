@@ -52,10 +52,16 @@ class Header extends Component<HeaderProps, HeaderState> {
 
   toggleWishListModal = () => {
     this.setState((prevState) => ({ showWishListModal: !prevState.showWishListModal }));
+
+    const wishList = JSON.parse(localStorage.getItem("wishList") || "[]");
+    this.setState({ wishList });
   };
 
   toggleCartModal = () => {
     this.setState((prevState) => ({ showCartModal: !prevState.showCartModal }));
+
+    const cart = JSON.parse(localStorage.getItem("cart") || "[]");
+    this.setState({ cart });
   };
 
   handleBookClick = (title: string) => {
