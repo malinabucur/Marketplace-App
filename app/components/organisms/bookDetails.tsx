@@ -1,9 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookDetailsProps } from "../interfaces/IBookDetailsProps";
 import FavouritesIcon from "../atoms/heart";
 import CartIcon from "../atoms/cart";
+import FavouritesIconFill from "../atoms/heartFill";
 
-const BookDetails: React.FC<BookDetailsProps> = ({ id, image, title, authors, publishedDate, description, pageCount, categories, language, addToWishList, addToCart, amount, currencyCode }) => {
+const BookDetails: React.FC<BookDetailsProps> = ({
+  id,
+  image,
+  title,
+  authors,
+  publishedDate,
+  description,
+  pageCount,
+  categories,
+  language,
+  addToWishList,
+  addToCart,
+  amount,
+  currencyCode,
+  isInWishList,
+}) => {
   const handleAddToWishList = () => {
     addToWishList(id, title, Array.isArray(authors) ? authors.join(", ") : authors, image);
   };
@@ -43,7 +59,7 @@ const BookDetails: React.FC<BookDetailsProps> = ({ id, image, title, authors, pu
           </div>
           <div className="mt-3">
             <button className="flex items-center" onClick={handleAddToWishList}>
-              <FavouritesIcon />
+              {isInWishList ? <FavouritesIconFill /> : <FavouritesIcon />}
               Add to wish list
             </button>
             <button className="flex justify-center mt-2" onClick={handleAddToCart}>

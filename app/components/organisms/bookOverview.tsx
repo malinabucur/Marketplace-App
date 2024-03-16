@@ -59,6 +59,7 @@ const BookOverview: React.FC<BookOverviewProps> = ({ books }) => {
             currencyCode={book.saleInfo.listPrice.currencyCode}
             addToWishList={() => addToWishList(book.id, book.volumeInfo.title, book.volumeInfo.authors, thumbnail)}
             addToCart={() => addToCart(book.id, book.volumeInfo.title, book.volumeInfo.authors, thumbnail, amount, currencyCode)}
+            isInWishList={wishList.some((item) => item.id === book.id)}
           />
         );
       })}
