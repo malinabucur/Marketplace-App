@@ -73,10 +73,14 @@ class Header extends Component<HeaderProps, HeaderState> {
           <div className="text-black content-center">
             {this.state.showWishListModal && (
               <WishListModal onClose={this.toggleWishListModal} wishList={this.state.wishList} onBookClick={this.handleBookClick}>
-                {this.state.wishList.map((title, index) => (
-                  <li key={index} onClick={() => this.handleBookClick(title)}>
-                    {title}
-                  </li>
+                {this.state.wishList.map((item, index) => (
+                  <div key={index} onClick={() => this.handleBookClick(item.title)} className="flex py-3">
+                    <img src={item.image} alt={item.title} className="w-20 h-28 inline-block mr-2" />
+                    <div className="flex flex-col text-black">
+                      <span className="text-xl font-medium">{item.title}</span>
+                      <span className="text-lg font-base">{Array.isArray(item.authors) ? item.authors.join(", ") : item.authors}</span>
+                    </div>
+                  </div>
                 ))}
               </WishListModal>
             )}

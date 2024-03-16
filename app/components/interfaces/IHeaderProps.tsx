@@ -9,7 +9,7 @@ export interface HeaderProps {
 export interface HeaderState {
   books: Book[];
   searchField: string;
-  wishList: string[];
+  wishList: { title: string; authors: string | string[]; image: string }[];
   showWishListModal: boolean;
   selectedBookTitle: string;
   showCartModal: boolean;
