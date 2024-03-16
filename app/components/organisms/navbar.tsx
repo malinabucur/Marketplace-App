@@ -6,7 +6,7 @@ import { NavbarProps } from "../interfaces/INavbarProps";
 const Navbar: React.FC<NavbarProps> = ({ updateBooks, updateSearchField }) => {
   return (
     <div className="bg-[#EEE5E3] w-full h-96">
-      <div className="px-4">
+      <div className="px-4 py-2">
         <Header updateBooks={updateBooks} updateSearchField={updateSearchField} />
       </div>
       <div className="flex justify-between py-[-10px]">

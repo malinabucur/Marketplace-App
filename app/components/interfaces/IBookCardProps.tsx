@@ -11,4 +11,5 @@ export interface BookCardProps {
   saleInfo: SaleInfo;
   amount: string;
   currencyCode: string;
+  addToCart: (id: string, title: string, image: string, authors: string | string[], amount: string, currencyCode: string) => void;
 }

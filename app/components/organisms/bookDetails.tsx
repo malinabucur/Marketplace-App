@@ -1,16 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BookDetailsProps } from "../interfaces/IBookDetailsProps";
-import Image from "next/image";
 import FavouritesIcon from "../atoms/heart";
+import CartIcon from "../atoms/cart";
+import FavouritesIconFill from "../atoms/heartFill";
 
-const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publishedDate, description, pageCount, categories, language }) => {
+const BookDetails: React.FC<BookDetailsProps> = ({
+  id,
+  image,
+  title,
+  authors,
+  publishedDate,
+  description,
+  pageCount,
+  categories,
+  language,
+  addToWishList,
+  addToCart,
+  amount,
+  currencyCode,
+  isInWishList,
+}) => {
+  const handleAddToWishList = () => {
+    addToWishList(id, title, Array.isArray(authors) ? authors.join(", ") : authors, image);
+  };
+
+  const handleAddToCart = () => {
+    addToCart(id, title, Array.isArray(authors) ? authors.join(", ") : authors, image, amount, currencyCode);
+  };
+
   return (
-    <div className="flex space-between w-[auto] h-[30rem] mx-12">
-      <div className="h-[22rem] w-auto my-3">
-        <Image src={image} alt="Book Cover Image" width={200} height={100} className="object-cover" />
+    <div className="flex space-between w-[auto] h-[30rem] mx-8">
+      <div className="flex justify-center h-[22rem] w-[13rem] my-3">
+        <img src={image} alt="Book Cover Image" className="w-44 h-60" />
       </div>
 
-      <div className="text-black text-base mx-3 px-4">
+      <div className="text-black text-base mx-3 px-4 w-[55rem]">
         <div className="flex justify-between">
           <div className="py-2">
             <div className="text-3xl font-semibold">{title}</div>
@@ -34,9 +58,13 @@ const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publis
             <span className="font-bold">Language:</span> <span className="uppercase">{language}</span>
           </div>
           <div className="mt-3">
-            <button className="flex items-center">
-              <FavouritesIcon />
+            <button className="flex items-center" onClick={handleAddToWishList}>
+              {isInWishList ? <FavouritesIconFill /> : <FavouritesIcon />}
               Add to wish list
+            </button>
+            <button className="flex justify-center mt-2" onClick={handleAddToCart}>
+              <CartIcon />
+              <p className="ml-2">Add to cart</p>
             </button>
           </div>
         </div>
