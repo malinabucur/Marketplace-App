@@ -5,7 +5,7 @@ const CartModal: React.FC<{
   children?: ReactNode;
   cart: { title: string; authors: string | string[]; image: string; amount: string; currencyCode: string }[];
   onBookClick: (title: string) => void;
-}> = ({ onClose, children, cart, onBookClick }) => {
+}> = ({ onClose, children, cart }) => {
   useEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -24,6 +24,8 @@ const CartModal: React.FC<{
     };
   }, [onClose]);
 
+  const totalAmount = cart.reduce((acc, item) => acc + parseFloat(item.amount), 0);
+
   return (
     <div className="relative z-10" aria-labelledby="CartModal" role="dialog" aria-modal="true">
       <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
@@ -39,11 +41,16 @@ const CartModal: React.FC<{
                 </div>
               </div>
             </div>
+            <hr className="h-px my-2 bg-gray-500 border-0" />
+            <div className="flex justify-between text-black text-xl mx-6">
+              <div className="font-bold">Total: </div>
+              <div>
+                {totalAmount} {cart[0].currencyCode}
+              </div>
+            </div>
             <div className="bg-gray-50 px-4 py-3">
-              <button
-                type="button"
-                className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                Cancel
+              <button type="button" className="mt-3 inline-flex w-full justify-end rounded-md bg-white px-3 py-2 text-sm font-semibold text-black shadow-sm hover:text-red-500">
+                Close
               </button>
             </div>
           </div>
