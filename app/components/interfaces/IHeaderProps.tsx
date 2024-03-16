@@ -1,5 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { Book } from "./IBook";
+import { VolumeInfo } from "./IVolumeInfo";
+import { SaleInfo } from "./ISaleInfo";
 
 export interface HeaderProps {
   updateBooks: Dispatch<SetStateAction<Book[]>>;
@@ -9,9 +11,10 @@ export interface HeaderProps {
 export interface HeaderState {
   books: Book[];
   searchField: string;
-  wishList: { title: string; authors: string | string[]; image: string }[];
+  wishList: { id: string; title: string; authors: string | string[]; image: string }[];
   showWishListModal: boolean;
-  selectedBookTitle: string;
   showCartModal: boolean;
-  cart: { title: string; authors: string | string[]; image: string; amount: string; currencyCode: string }[];
+  cart: { id: string; title: string; authors: string | string[]; image: string; amount: string; currencyCode: string; volumeInfo: VolumeInfo; publishedDate: string; saleInfo: SaleInfo }[];
+  selectedBook: Book | null;
+  showBookModal: boolean;
 }

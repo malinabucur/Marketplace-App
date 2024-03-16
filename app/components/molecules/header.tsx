@@ -2,16 +2,17 @@ import React, { ChangeEvent, Component, Dispatch, SetStateAction } from "react";
 import CartIcon from "../atoms/cart";
 import FavouritesIcon from "../atoms/heart";
 import SearchBar from "./searchBar";
-import { searchBookByTitle } from "../services/bookService";
+import { searchBookById, searchBookByTitle } from "../services/bookService";
 import { Book } from "../interfaces/IBook";
 import { HeaderProps, HeaderState } from "../interfaces/IHeaderProps";
 import WishListModal from "./wishListModal";
 import CartModal from "./cartModal";
+import Modal from "./modal";
 
 class Header extends Component<HeaderProps, HeaderState> {
   constructor(props: HeaderProps) {
     super(props);
-    this.state = { books: [], searchField: "", wishList: [], showWishListModal: false, selectedBookTitle: "", cart: [], showCartModal: false };
+    this.state = { books: [], searchField: "", wishList: [], showWishListModal: false, cart: [], showCartModal: false, selectedBook: null, showBookModal: false };
     this.handleSearch = this.handleSearch.bind(this);
   }
 
@@ -64,8 +65,17 @@ class Header extends Component<HeaderProps, HeaderState> {
     this.setState({ cart });
   };
 
-  handleBookClick = (title: string) => {
-    console.log("Book clicked:", title);
+  toggleBookModal = () => {
+    this.setState((prevState) => ({ showBookModal: !prevState.showBookModal }));
+  };
+
+  handleItemClick = async (item: any) => {
+    try {
+      const bookData = await searchBookById(item.id);
+      this.setState({ selectedBook: bookData });
+    } catch (error) {
+      console.error("Error handling click:", error);
+    }
   };
 
   render() {
@@ -78,10 +88,12 @@ class Header extends Component<HeaderProps, HeaderState> {
           </button>
           <div className="text-black content-center">
             {this.state.showWishListModal && (
-              <WishListModal onClose={this.toggleWishListModal} wishList={this.state.wishList} onBookClick={this.handleBookClick}>
+              <WishListModal onClose={this.toggleWishListModal} wishList={this.state.wishList}>
                 {this.state.wishList.map((item, index) => (
-                  <div key={index} onClick={() => this.handleBookClick(item.title)} className="flex py-3">
-                    <img src={item.image} alt={item.title} className="w-20 h-28 inline-block mr-2" />
+                  <div key={index} onClick={() => this.handleItemClick(item)} className="flex py-3 cursor-pointer">
+                    <div>
+                      <img src={item.image} alt={item.title} className="w-20 h-28 inline-block mr-2" />
+                    </div>
                     <div className="flex flex-col text-black">
                       <span className="text-xl font-medium">{item.title}</span>
                       <span className="text-lg font-base">{Array.isArray(item.authors) ? item.authors.join(", ") : item.authors}</span>
@@ -90,16 +102,19 @@ class Header extends Component<HeaderProps, HeaderState> {
                 ))}
               </WishListModal>
             )}
+            {this.state.selectedBook && <Modal book={this.state.selectedBook} onClose={this.toggleBookModal} show={this.state.showBookModal} />}
           </div>
           <button onClick={this.toggleCartModal}>
             <CartIcon />
           </button>
           <div className="content-center">
             {this.state.showCartModal && (
-              <CartModal onClose={this.toggleCartModal} cart={this.state.cart} onBookClick={this.handleBookClick}>
+              <CartModal onClose={this.toggleCartModal} cart={this.state.cart}>
                 {this.state.cart.map((item, index) => (
-                  <div key={index} onClick={() => this.handleBookClick(item.title)} className="flex py-3">
-                    <img src={item.image} alt={item.title} className="w-20 h-28 inline-block mr-2" />
+                  <div key={index} onClick={() => this.handleItemClick(item)} className="flex py-3 cursor-pointer">
+                    <div>
+                      <img src={item.image} alt={item.title} className="w-20 h-28 inline-block mr-2" />
+                    </div>
                     <div className="flex flex-col text-black">
                       <span className="text-xl font-medium">{item.title}</span>
                       <span className="text-lg font-base">{Array.isArray(item.authors) ? item.authors.join(", ") : item.authors}</span>
@@ -111,6 +126,7 @@ class Header extends Component<HeaderProps, HeaderState> {
                 ))}
               </CartModal>
             )}
+            {this.state.selectedBook && <Modal book={this.state.selectedBook} onClose={this.toggleBookModal} show={this.state.showBookModal} />}
           </div>
         </div>
       </div>
