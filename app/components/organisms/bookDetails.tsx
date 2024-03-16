@@ -9,12 +9,12 @@ const BookDetails: React.FC<BookDetailsProps> = ({ image, title, authors, publis
   };
 
   return (
-    <div className="flex space-between w-[auto] h-[30rem] mx-12">
-      <div className="h-[22rem] w-auto my-3">
-        <Image src={image} alt="Book Cover Image" width={200} height={100} className="object-cover" />
+    <div className="flex space-between w-[auto] h-[30rem] mx-8">
+      <div className="flex justify-center h-[22rem] w-[13rem] my-3">
+        <img src={image} alt="Book Cover Image" className="w-44 h-60" />
       </div>
 
-      <div className="text-black text-base mx-3 px-4">
+      <div className="text-black text-base mx-3 px-4 w-[55rem]">
         <div className="flex justify-between">
           <div className="py-2">
             <div className="text-3xl font-semibold">{title}</div>
