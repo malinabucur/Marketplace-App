@@ -19,7 +19,7 @@ const Modal: React.FC<{ book: Book; onClose: () => void; show: boolean }> = ({ b
 
       document.body.style.overflow = "";
     };
-  }, [show, onClose]);
+  }, [show]);
 
   return (
     <>

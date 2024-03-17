@@ -73,13 +73,13 @@ class Header extends Component<HeaderProps, HeaderState> {
   };
 
   toggleBookModal = () => {
-    this.setState((prevState) => ({ showBookModal: !prevState.showBookModal }));
+    this.setState((prevState) => ({ showBookModal: !prevState.showBookModal, selectedBook: null }));
   };
 
   handleItemClick = async (item: any) => {
     try {
       const bookData = await searchBookById(item.id);
-      this.setState({ selectedBook: bookData });
+      this.setState({ selectedBook: bookData, showBookModal: true });
     } catch (error) {
       console.error("Error handling click:", error);
     }
