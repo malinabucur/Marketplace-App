@@ -40,7 +40,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ searchBook }) => {
     setFocusedCategory(category);
   };
 
-  const item_width = 200;
+  const itemWidth = 200;
 
   const handleScroll = (scrollAmount: number) => {
     const newScrollPosition = scrollPosition + scrollAmount;
@@ -60,7 +60,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ searchBook }) => {
       <div className="flex justify-center w-14 h-10 transition-all rounded-full select-none hover:bg-[#EEE5E3] active:bg-[#EEE5E3]">
         <button
           onClick={() => {
-            handleScroll(-item_width);
+            handleScroll(-itemWidth);
           }}>
           <ArrowIcon d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
         </button>
@@ -69,7 +69,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ searchBook }) => {
       <div ref={containerRef} className="text-black m-4 overflow-x-auto relative whitespace-nowrap" style={{ WebkitOverflowScrolling: "touch", scrollbarWidth: "none", msOverflowStyle: "none" }}>
         {categoryList.map((category, index) => (
           <button
-            key={index}
+            key={category}
             className={`px-3 py-1 text-base hover:text-[#6B6B6B] hover:border-2 hover:border-[#6B6B6B] hover:rounded-md ${
               focusedCategory === category ? "border-2 border-black rounded-md bg-[#EEE5E3]" : ""
             }`}
@@ -82,7 +82,7 @@ const CategoryList: React.FC<CategoryListProps> = ({ searchBook }) => {
       <div className="flex justify-center w-14 h-10 transition-all rounded-full select-none hover:bg-[#EEE5E3] active:bg-[#EEE5E3]">
         <button
           onClick={() => {
-            handleScroll(item_width);
+            handleScroll(itemWidth);
           }}>
           <ArrowIcon d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
         </button>
