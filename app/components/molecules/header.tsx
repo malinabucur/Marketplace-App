@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Component, Dispatch, SetStateAction } from "react";
+import React, { ChangeEvent, Component } from "react";
 import CartIcon from "../atoms/cart";
 import FavouritesIcon from "../atoms/heart";
 import SearchBar from "./searchBar";
@@ -13,15 +13,19 @@ import { RemoveIcon } from "../atoms/remove";
 class Header extends Component<HeaderProps, HeaderState> {
   constructor(props: HeaderProps) {
     super(props);
-    this.state = { books: [], searchField: "", wishList: [], showWishListModal: false, cart: [], showCartModal: false, selectedBook: null, showBookModal: false };
+    this.state = {
+      books: [],
+      searchField: "",
+      wishList: [],
+      showWishListModal: false,
+      cart: [],
+      showCartModal: false,
+      selectedBook: null,
+      showBookModal: false,
+    };
     this.handleSearch = this.handleSearch.bind(this);
+    this.handleItemClick = this.handleItemClick.bind(this);
   }
-
-  updateBooksState: React.Dispatch<React.SetStateAction<Book[]>> = (newBooks: Book[] | ((prevState: Book[]) => Book[])) => {
-    this.setState((prevState) => ({
-      books: typeof newBooks === "function" ? (newBooks as (prevState: Book[]) => Book[])(prevState.books) : newBooks,
-    }));
-  };
 
   handleSearch = async (e: ChangeEvent<HTMLInputElement>) => {
     this.setState({ searchField: e.target.value });
@@ -106,9 +110,9 @@ class Header extends Component<HeaderProps, HeaderState> {
           <div className="text-black content-center">
             {this.state.showWishListModal && (
               <WishListModal onClose={this.toggleWishListModal} wishList={this.state.wishList}>
-                {this.state.wishList.map((item, index) => (
-                  <div className="flex justify-between">
-                    <div key={index} onClick={() => this.handleItemClick(item)} className="flex py-3 cursor-pointer">
+                {this.state.wishList.map((item) => (
+                  <div key={item.id} className="flex justify-between">
+                    <div onClick={() => this.handleItemClick(item)} className="flex py-3 cursor-pointer">
                       <div>
                         <img src={item.image} alt={item.title} className="w-20 h-28 inline-block mr-2" />
                       </div>
@@ -135,9 +139,9 @@ class Header extends Component<HeaderProps, HeaderState> {
           <div className="content-center">
             {this.state.showCartModal && (
               <CartModal onClose={this.toggleCartModal} cart={this.state.cart}>
-                {this.state.cart.map((item, index) => (
-                  <div className="flex justify-between ">
-                    <div key={index} onClick={() => this.handleItemClick(item)} className="flex py-3 cursor-pointer">
+                {this.state.cart.map((item) => (
+                  <div key={item.id} className="flex justify-between ">
+                    <div onClick={() => this.handleItemClick(item)} className="flex py-3 cursor-pointer">
                       <div>
                         <img src={item.image} alt={item.title} className="w-20 h-28 inline-block mr-2" />
                       </div>
