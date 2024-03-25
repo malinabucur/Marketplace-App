@@ -35,7 +35,7 @@ const WishListModal: React.FC<{ onClose: () => void; children?: ReactNode; wishL
               </div>
             </div>
             <div className="px-4">
-              <button type="button" className="mt-3 inline-flex w-full justify-end rounded-md p3 text-sm font-semibold text-black shadow-sm hover:text-red-500">
+              <button type="button" className="mt-3 inline-flex w-full justify-end rounded-md p-3 text-sm font-semibold text-black shadow-sm hover:text-red-500">
                 Close
               </button>
             </div>
