@@ -23,7 +23,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ![Searching](https://github.com/malinabucur/Marketplace-App/assets/109577091/eb016733-014c-4b21-8557-c040cd1a09a3)
 
   
-* Category list - display books by category.
+* Category list - display books by category. Ex: Poetry.
 ![Poetry](https://github.com/malinabucur/Marketplace-App/assets/109577091/81141b93-6ff4-41bf-ac49-db14a466a07e)
 
 
